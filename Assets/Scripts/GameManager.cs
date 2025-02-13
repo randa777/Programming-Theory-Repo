@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public Cube clickedObject;
     public GameObject colorSlider;
+    public GameObject[] listObj;
     private Slider sliderR;
     private Slider sliderG;
     private Slider sliderB;
@@ -45,13 +46,6 @@ public class GameManager : MonoBehaviour
                     clickedObject.isClicked = false;
                     clickedObject = null;
                     colorSlider.SetActive(false);
-                }
-                else
-                {
-                    // object id clicked
-                    sliderR.value = clickedObject.color.r;
-                    sliderG.value = clickedObject.color.g;
-                    sliderB.value = clickedObject.color.b;
                 }
             }
         }
@@ -96,5 +90,14 @@ public class GameManager : MonoBehaviour
         sliderR.value = color.r;
         sliderG.value = color.g;
         sliderB.value = color.b;
+    }
+
+    public void AddObject()
+    {
+        Vector3 pos = Vector3.zero;
+        pos.y = 5;
+
+        int index = Random.Range(0, listObj.Length);
+        Instantiate(listObj[index], pos, listObj[index].transform.rotation);
     }
 }

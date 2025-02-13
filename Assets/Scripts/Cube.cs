@@ -32,6 +32,7 @@ public class Cube : MonoBehaviour
     {
         cubeRenderer = GetComponent<MeshRenderer>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        color = cubeRenderer.material.color;
         StartCoroutine(ObjectTurn());
     }
 
@@ -41,16 +42,17 @@ public class Cube : MonoBehaviour
         if (!isClicked)
         {
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-            CheckBounceLine();
         }
         else
         {
             ObjectClicked();
         }
+        CheckBounceLine();
     }
 
     public void ChangeColor(Color newColor)
     {
+        Debug.Log(newColor);
         color = newColor;
         Material mat = cubeRenderer.material;
         mat.color = m_color;
