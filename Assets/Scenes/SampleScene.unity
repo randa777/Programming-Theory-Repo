@@ -1403,6 +1403,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickedObject: {fileID: 0}
+  sliderR: {fileID: 1660177081}
+  sliderG: {fileID: 807456202}
+  sliderB: {fileID: 1281088848}
   colorSlider: {fileID: 884850157}
   listObj:
   - {fileID: 7259895978485338001, guid: 48fcc552d7c50794e92eac7f21994de5, type: 3}

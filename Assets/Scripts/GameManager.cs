@@ -6,16 +6,14 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public Cube clickedObject;
+    public Slider sliderR;
+    public Slider sliderG;
+    public Slider sliderB;
     public GameObject colorSlider;
     public GameObject[] listObj;
-    private Slider sliderR;
-    private Slider sliderG;
-    private Slider sliderB;
+
     void Start()
     {
-        sliderR = colorSlider.transform.Find("SliderR").GetComponent<Slider>();
-        sliderG = colorSlider.transform.Find("SliderG").GetComponent<Slider>();
-        sliderB = colorSlider.transform.Find("SliderB").GetComponent<Slider>();
         sliderR.onValueChanged.AddListener(SetRColor);
         sliderG.onValueChanged.AddListener(SetGColor);
         sliderB.onValueChanged.AddListener(SetBColor);
