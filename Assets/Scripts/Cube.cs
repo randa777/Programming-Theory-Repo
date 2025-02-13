@@ -52,7 +52,6 @@ public class Cube : MonoBehaviour
 
     public void ChangeColor(Color newColor)
     {
-        Debug.Log(newColor);
         color = newColor;
         Material mat = cubeRenderer.material;
         mat.color = m_color;
