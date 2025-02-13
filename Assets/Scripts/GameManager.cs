@@ -1,9 +1,26 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-// ChatGPT
+
 public class GameManager : MonoBehaviour
 {
     public Cube clickedObject;
+    public GameObject colorSlider;
+    private Slider sliderR;
+    private Slider sliderG;
+    private Slider sliderB;
+    void Start()
+    {
+        sliderR = colorSlider.transform.Find("SliderR").GetComponent<Slider>();
+        sliderG = colorSlider.transform.Find("SliderG").GetComponent<Slider>();
+        sliderB = colorSlider.transform.Find("SliderB").GetComponent<Slider>();
+        sliderR.onValueChanged.AddListener(SetRColor);
+        sliderG.onValueChanged.AddListener(SetGColor);
+        sliderB.onValueChanged.AddListener(SetBColor);
+        colorSlider.SetActive(false);
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0)) // 左クリック
@@ -14,17 +31,70 @@ public class GameManager : MonoBehaviour
 
     void DetectClick()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (clickedObject != null)
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
-            if (!Physics.Raycast(ray, out hit) || !hit.collider.CompareTag("Object"))
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (clickedObject != null)
             {
-                // 何にも当たらなかった場合（空間がクリックされた）
-                clickedObject.isClicked = false;
-                clickedObject = null;
+                // object is selected
+                if (!Physics.Raycast(ray, out hit) || !hit.collider.CompareTag("Object"))
+                {
+                    // none is clicked
+                    clickedObject.isClicked = false;
+                    clickedObject = null;
+                    colorSlider.SetActive(false);
+                }
+                else
+                {
+                    // object id clicked
+                    sliderR.value = clickedObject.color.r;
+                    sliderG.value = clickedObject.color.g;
+                    sliderB.value = clickedObject.color.b;
+                }
             }
         }
+    }
+    
+    void SetRColor(float colorR)
+    {
+        Color newColor = clickedObject.color;
+        newColor.r = colorR;
+        ChangeColor(newColor);
+
+    }
+
+    void SetGColor(float colorG)
+    {
+        Color newColor = clickedObject.color;
+        newColor.g = colorG;
+        ChangeColor(newColor);
+
+    }
+
+    void SetBColor(float colorB)
+    {
+        Color newColor = clickedObject.color;
+        newColor.b = colorB;
+        ChangeColor(newColor);
+
+    }
+
+    // update object color
+    void ChangeColor(Color newColor)
+    {
+        if (clickedObject != null)
+        {
+            clickedObject.ChangeColor(newColor);
+        }
+    }
+
+    // update slider value from object color
+    public void SetColorSlider(Color color)
+    {
+        sliderR.value = color.r;
+        sliderG.value = color.g;
+        sliderB.value = color.b;
     }
 }
